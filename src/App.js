@@ -1,6 +1,7 @@
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import './App.css';
+import ImageUpload from './components/ImageUpload/ImageUpload';
 import Post from './components/Post/Post';
 import { db, auth } from './firebase';
 
@@ -23,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openSingIn, setOpenSingIn] = useState(false);
+  const [openSignUp, setOpenSingUp] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +38,7 @@ function App() {
       .createUserWithEmailAndPassword(email, password)
       .catch((error) => alert(error.message));
 
-    setOpenSignIn(false);
+    setOpenSingUp(false);
   };
 
   const handleLogin = (e) => {
@@ -47,9 +48,10 @@ function App() {
       .signInWithEmailAndPassword(email, password)
       .catch((error) =>  alert(error.message));
     
-      setOpen(false);
+      setOpenSingIn(false);
   };
 
+  //* 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -80,6 +82,7 @@ function App() {
   //* Getting all posts from firebase 🔥
   useEffect(() => {
     db.collection('posts')
+      .orderBy('timestamp', 'desc')
       .onSnapshot((snapshot) => {
         setPosts(snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -90,11 +93,10 @@ function App() {
 
   return (
     <div className="app">
-
       {/* signup modal */}
       <Modal
-        open={openSignIn}
-        onClose={() => setOpenSignIn(false)}
+        open={openSignUp}
+        onClose={() => setOpenSingUp(false)}
         className={classes.modal}
       >
         <div className={classes.paper}>
@@ -112,8 +114,8 @@ function App() {
 
       {/* login modal */}
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openSingIn}
+        onClose={() => setOpenSingIn(false)}
         className={classes.modal}
       >
         <div className={classes.paper}>
@@ -130,17 +132,19 @@ function App() {
 
       <div className="app__header">
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram logo" />
+        {user 
+          ? <Button style={{ backgroundColor: 'red' }} onClick={() => auth.signOut()} variant="contained" color="primary">Logout</Button>
+          : (
+            <div className="login__container">
+              <Button style={{ backgroundColor: 'green' }} onClick={() => setOpenSingIn(true)} variant="contained" color="primary">Log in</Button>
+              <Button style={{ backgroundColor: 'purple' }} onClick={() => setOpenSingUp(true)} variant="contained" color="primary">Sign up</Button>
+            </div>
+          )
+        }
       </div>
 
-      {user 
-        ? <Button onClick={() => auth.signOut()} variant="contained" color="primary">Logout</Button>
-        : (
-          <div className="login__container">
-            <Button style={{ backgroundColor: 'green' }} onClick={() => setOpen(true)} variant="contained" color="primary">Log in</Button>
-            <Button onClick={() => setOpenSignIn(true)} variant="contained" color="primary">Sign up</Button>
-          </div>
-        )
-      }
+
+      {user?.displayName && <ImageUpload username={user.displayName} />}
 
       <div className="app__posts">
         {

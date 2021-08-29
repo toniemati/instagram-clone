@@ -1,0 +1,9 @@
+.imageupload {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  max-width: 600px;
+  margin: 10px auto;
+  background-color: #fff;
+  gap: 1rem;
+}
