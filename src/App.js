@@ -107,7 +107,7 @@ function App() {
             <Input placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input placeholder="Username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
             <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <Button type="submit">Sing up</Button>
+            <Button variant="contained" color="primary" type="submit">Sing up</Button>
           </form>
         </div>
       </Modal>
@@ -125,7 +125,7 @@ function App() {
           <form className="app__signup" onSubmit={handleLogin}>
             <Input placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <Button type="submit">Login</Button>
+            <Button variant="contained" color="primary" type="submit">Login</Button>
           </form>
         </div>
       </Modal>
@@ -135,7 +135,7 @@ function App() {
         {user 
           ? <Button style={{ backgroundColor: 'red' }} onClick={() => auth.signOut()} variant="contained" color="primary">Logout</Button>
           : (
-            <div className="login__container">
+            <div className="app__loginContainer">
               <Button style={{ backgroundColor: 'green' }} onClick={() => setOpenSingIn(true)} variant="contained" color="primary">Log in</Button>
               <Button style={{ backgroundColor: 'purple' }} onClick={() => setOpenSingUp(true)} variant="contained" color="primary">Sign up</Button>
             </div>
@@ -149,7 +149,7 @@ function App() {
       <div className="app__posts">
         {
           posts.map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} user={user} post={post} />
           ))
         }
       </div>

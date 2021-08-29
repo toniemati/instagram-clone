@@ -16,16 +16,24 @@
 }
 
 .app__header {
+  position: sticky;
+  top: 0;
   background-color: #fff;
   border-bottom: 1px solid lightgray;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 }
 
 .app__headerImage {
   object-fit: contain;
+}
+
+.app__loginContainer {
+  display: flex;
+  gap: 1rem;
 }
 
 .app__posts {

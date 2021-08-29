@@ -46,7 +46,7 @@ const ImageUpload = ({ username }) => {
             });
             setProgress(0);
             setCaption('');
-            setImage(null);
+            setImage('');
           });
       }
     )
@@ -56,7 +56,7 @@ const ImageUpload = ({ username }) => {
     <div className="imageupload">
       <progress style={{ width: '100%' }} value={progress} max="100" />
       <Input placeholder="Enter a caption..." value={caption} onChange={(e) => setCaption(e.target.value)} type="text" />
-      <input type="file" onChange={handleChange} />
+      <input value={image} type="file" onChange={handleChange} />
       <Button style={{ color: 'orange', borderColor: 'orange' }} onClick={handleUpload} variant="outlined" color="primary">Upload</Button>
     </div>
   )

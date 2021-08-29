@@ -26,3 +26,32 @@
   font-weight: 400;
   padding: 20px;
 }
+
+.post__commentBox {
+  display: flex;
+  margin-top: 10px;
+}
+
+.post__input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+}
+
+.post__button {
+  cursor: pointer;
+  flex: 0;
+  padding: 10px;
+  border: none;
+  border-top: 1px solid lightgray;
+  background-color: transparent;
+  color: #6082a3;
+  font-weight: bold;
+}
+
+.post__comments {
+  font-size: .85rem;
+  color: #555;
+  padding: 10px 20px;
+}
